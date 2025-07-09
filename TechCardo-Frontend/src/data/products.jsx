@@ -1,0 +1,28 @@
+const products = [
+  { id: 1, name: 'Tênis Nike Revolution 6',     price: 299.90,       buyed: 2392, star: 4.5, HaveOffer: true,  offer: 28, image: 'https://res.cloudinary.com/dzuvl4k2f/image/upload/v1752082552/T%C3%AAnis_Nike_Revolution_6_zwmtm1.webp'},
+  { id: 2, name: 'Jaqueta Jeans Levis',         price: 419.00,       buyed: 1847, star: 3.0, HaveOffer: false, offer: 12, image: 'https://res.cloudinary.com/dzuvl4k2f/image/upload/v1752071018/Jaqueta_Jeans_Levis_uvy88q.png' },
+  { id: 3, name: 'Fone de Ouvido Bose QuietComfort', price: 1299.00, buyed: 2765, star: 5.0, HaveOffer: true,  offer: 24, image: 'https://res.cloudinary.com/dzuvl4k2f/image/upload/v1752071018/Fone_de_Ouvido_Bose_QuietComfort_tryhzn.jpg' },
+  { id: 4, name: 'Smart TV Samsung 55"',        price: 2499.00,      buyed: 2998, star: 2.5, HaveOffer: false, offer: 8,  image: 'https://res.cloudinary.com/dzuvl4k2f/image/upload/v1752071020/Smart_TV_Samsung_55_tmawre.jpg' },
+  { id: 5, name: 'Câmera DSLR Canon EOS',       price: 3799.00,      buyed: 1123, star: 4.0, HaveOffer: true,  offer: 19, image: 'https://res.cloudinary.com/dzuvl4k2f/image/upload/v1752071017/C%C3%A2mera_DSLR_Canon_EOS_bnqnbj.jpg' },
+  { id: 6, name: 'Relógio Garmin Forerunner',   price: 1199.00,      buyed: 876,  star: 1.0, HaveOffer: false, offer: 30, image: 'https://res.cloudinary.com/dzuvl4k2f/image/upload/v1752071020/Rel%C3%B3gio_Garmin_Forerunner_ls0r9g.jpg'},
+  { id: 7, name: 'Notebook Dell Inspiron',      price: 4299.00,      buyed: 2456, star: 4.8, HaveOffer: true,  offer: 7,  image: 'https://res.cloudinary.com/dzuvl4k2f/image/upload/v1752071019/Notebook_Dell_Inspiron_onuvit.jpg'},
+  { id: 8, name: 'Mochila Swissgear',           price: 349.00,       buyed: 1345, star: 2.0, HaveOffer: true,  offer: 21, image: 'https://res.cloudinary.com/dzuvl4k2f/image/upload/v1752071020/Mochila_Swissgear_ijgocm.png'},
+  { id: 9, name: 'Óculos Ray-Ban Aviador',      price: 699.00,       buyed: 998,  star: 3.7, HaveOffer: false, offer: 13, image: 'https://res.cloudinary.com/dzuvl4k2f/image/upload/v1752071020/%C3%93culos_Ray-Ban_Aviador_iiqz4m.png'},
+  { id: 10, name: 'Bicicleta Caloi Elite',      price: 2999.00,      buyed: 2345, star: 0.0, HaveOffer: true,  offer: 25, image: 'https://res.cloudinary.com/dzuvl4k2f/image/upload/v1752071019/Bicicleta_Caloi_Elite_fahvho.jpg'},
+  { id: 11, name: 'Cafeteira Nespresso',        price: 599.00,       buyed: 1543, star: 4.2, HaveOffer: true,  offer: 16, image: 'https://res.cloudinary.com/dzuvl4k2f/image/upload/v1752071019/Cafeteira_Nespresso_i0v9n3.jpg'},
+  { id: 12, name: 'Livro O Hobbit',             price: 49.90,        buyed: 2109, star: 5.0, HaveOffer: false, offer: 5,  image: 'https://res.cloudinary.com/dzuvl4k2f/image/upload/v1752071020/Livro_O_Hobbit_ju1ezw.jpg'},
+  { id: 13, name: 'Mouse Logitech MX Master 3', price: 399.00,       buyed: 1876, star: 3.3, HaveOffer: true,  offer: 29, image: 'https://res.cloudinary.com/dzuvl4k2f/image/upload/v1752071019/Mouse_Logitech_MX_Master_3_lrrdpl.jpg' },
+  { id: 14, name: 'Teclado Mecânico Redragon',  price: 299.00,       buyed: 2678, star: 2.8, HaveOffer: true,  offer: 11, image: 'https://res.cloudinary.com/dzuvl4k2f/image/upload/v1752071019/Teclado_Mec%C3%A2nico_Redragon_uexndp.jpg' },
+  { id: 15, name: 'Monitor LG UltraWide',       price: 1499.00,      buyed: 1345, star: 1.5, HaveOffer: false, offer: 23, image: 'https://res.cloudinary.com/dzuvl4k2f/image/upload/v1752071019/Monitor_LG_UltraWide_qjirvm.png' },
+  { id: 16, name: 'Echo Dot 4ª Geração',        price: 349.00,       buyed: 2901, star: 4.9, HaveOffer: true,  offer: 18, image: 'https://res.cloudinary.com/dzuvl4k2f/image/upload/v1752071018/Echo_Dot_4%C2%AA_Gera%C3%A7%C3%A3o_geqnnv.jpg' },
+  { id: 17, name: 'Patins Rollerblade',         price: 799.00,       buyed: 1234, star: 0.5, HaveOffer: true,  offer: 27, image: 'https://res.cloudinary.com/dzuvl4k2f/image/upload/v1752071018/Patins_Rollerblade_lbgzol.jpg' },
+  { id: 18, name: 'Camiseta Adidas Originals',  price: 129.90,       buyed: 1678, star: 3.9, HaveOffer: false, offer: 6,  image: 'https://res.cloudinary.com/dzuvl4k2f/image/upload/v1752071018/Camiseta_Adidas_Originals_a7swjn.png' },
+  { id: 19, name: 'Chuteira Nike Mercurial',    price: 499.00,       buyed: 1987, star: 2.2, HaveOffer: true,  offer: 30, image: 'https://res.cloudinary.com/dzuvl4k2f/image/upload/v1752071017/Chuteira_Nike_Mercurial_h6cu8e.png' },
+  { id: 20, name: 'Tablet Samsung Galaxy Tab',  price: 1299.00,      buyed: 2456, star: 5.0, HaveOffer: true,  offer: 9,  image: 'https://res.cloudinary.com/dzuvl4k2f/image/upload/v1752071018/Tablet_Samsung_Galaxy_Tab_dhmanq.jpg' },
+  { id: 21, name: 'Aspirador Robô Xiaomi',      price: 1099.00,      buyed: 2789, star: 1.8, HaveOffer: true,  offer: 14, image: 'https://res.cloudinary.com/dzuvl4k2f/image/upload/v1752071017/Aspirador_Rob%C3%B4_Xiaomi_rcdosx.jpg' },
+  { id: 22, name: 'Cadeira Gamer ThunderX3',    price: 1399.00,      buyed: 1101, star: 0.0, HaveOffer: false, offer: 17, image: 'https://res.cloudinary.com/dzuvl4k2f/image/upload/v1752071017/Cadeira_Gamer_ThunderX3_tanqwc.jpg' },
+  { id: 23, name: 'Batedeira Planetária Arno',  price: 499.00,       buyed: 1888, star: 4.7, HaveOffer: true,  offer: 22, image: 'https://res.cloudinary.com/dzuvl4k2f/image/upload/v1752071017/Batedeira_Planet%C3%A1ria_Arno_qwmppp.jpg' },
+  { id: 24, name: 'Tênis Adidas Ultraboost',    price: 799.00,       buyed: 2222, star: 2.0, HaveOffer: true,  offer: 26, image: 'https://res.cloudinary.com/dzuvl4k2f/image/upload/v1752071017/T%C3%AAnis_Adidas_Ultraboost_r2zniz.jpg' },
+]; 
+
+export default products;
