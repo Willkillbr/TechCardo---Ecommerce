@@ -1,8 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect,useState } from 'react';
 import products from '../data/products';
-import { useState } from 'react';
-
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -22,7 +20,7 @@ export default function ProductDetail() {
       {children}
     </div>
   );
- 
+   
   if (!product) {
     return wrapper(
       <div className="text-center">
@@ -56,6 +54,32 @@ export default function ProductDetail() {
             alt={product.name}
             className="max-w-md w-full rounded-xl shadow-2xl object-cover"
           />
+          
+          {product.haveType && product.haveSize && (
+            <div className="mt-8 w-full max-w-md">
+              <div className="grid grid-cols-5 gap-3">
+                {product.types.size.options.map(option => (
+                  <button
+                    key={option.value}
+                    className="py-2 rounded-lg border border-gray-700 bg-gray-900 hover:bg-gray-800 transition font-bold text-white"
+                  >
+                    {option.value}
+                  </button>
+                ))}
+              </div>
+              <div className="grid grid-cols-5 gap-3">
+                {product.types.color.options.map(option => (
+                  <button
+                    key={option.value}
+                    className="py-2 rounded-lg border border-gray-700 bg-gray-900 hover:bg-gray-800 transition font-bold text-white"
+                  >
+                    {option.value}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
 
           <div className="mt-8 w-full max-w-md">
             <h2 className="text-xl font-semibold mb-4">Outros produtos recomendados</h2>
@@ -93,7 +117,7 @@ export default function ProductDetail() {
               {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.price)}
             </p>
             <p className="text-2xl text-green-700 font-bold">
-              {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format((product.price))}
+              {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.price * (100 - product.offer) / 100)}  
             </p>
           </div>
           ) : (
@@ -119,7 +143,7 @@ export default function ProductDetail() {
           </div>
 
           <p className="text-gray-400">
-            Este produto é ideal para quem busca qualidade, design moderno e ótimo custo‑benefício. Fabricado com materiais premium, é a escolha perfeita para seu dia a dia.
+            {product.description}
           </p>
 
           <div className="flex gap-4">
@@ -167,13 +191,11 @@ export default function ProductDetail() {
               <textarea
                 className="bg-gray-900 border border-gray-700 rounded p-3 text-white resize-none"
                 rows={3}
-                placeholder="Deixe seu comentário (simulado)"
-                disabled
+                placeholder="Deixe seu comentário (simulado)"                
               />
               <button
                 type="button"
-                className="bg-blue-700 px-6 py-2 rounded font-semibold hover:bg-blue-800 transition cursor-not-allowed"
-                disabled
+                className="bg-blue-700 px-6 py-2 rounded font-semibold hover:bg-blue-800 transition"                  
               >
                 Enviar Comentário
               </button>
