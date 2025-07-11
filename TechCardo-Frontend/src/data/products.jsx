@@ -15,14 +15,16 @@ const products = [
       title: 'Cor',
       options: [
         {
-          value: 'preto',
-          haveImage: true,
-          image: 'https://exemplo.com/tenis-preto.jpg'
+          value: 'branco',
+          image: 'https://res.cloudinary.com/dzuvl4k2f/image/upload/v1752253046/nike_revolutuion_branco_az31ju.avif'
         },
         {
           value: 'azul',
-          haveImage: true,
-          image: 'https://exemplo.com/tenis-azul.jpg'
+          image: 'https://res.cloudinary.com/dzuvl4k2f/image/upload/v1752253139/nike_revolutuion_azul_hps5b9.avif'
+        },
+        {
+          value: 'preto',
+          image: 'https://res.cloudinary.com/dzuvl4k2f/image/upload/v1752082552/T%C3%AAnis_Nike_Revolution_6_zwmtm1.webp'
         }
       ]
     },
@@ -47,8 +49,7 @@ const products = [
       ]
     }
   },
-  description: `O Tênis Nike Revolution 6 foi desenvolvido para proporcionar máximo conforto e desempenho em suas atividades diárias e esportivas. Com design moderno e leve, oferece excelente amortecimento graças à sua entressola em espuma que absorve impactos, reduzindo o desgaste nas articulações. A parte superior em tecido respirável garante ventilação constante, mantendo seus pés secos e frescos durante o uso prolongado. Ideal para corridas, treinos e uso casual, alia tecnologia e estilo para você se destacar em qualquer ocasião.`,
-  image: 'https://res.cloudinary.com/dzuvl4k2f/image/upload/v1752082552/T%C3%AAnis_Nike_Revolution_6_zwmtm1.webp'
+  description: `O Tênis Nike Revolution 6 foi desenvolvido para proporcionar máximo conforto e desempenho em suas atividades diárias e esportivas. Com design moderno e leve, oferece excelente amortecimento graças à sua entressola em espuma que absorve impactos, reduzindo o desgaste nas articulações. A parte superior em tecido respirável garante ventilação constante, mantendo seus pés secos e frescos durante o uso prolongado. Ideal para corridas, treinos e uso casual, alia tecnologia e estilo para você se destacar em qualquer ocasião.`,  
 },
   {
     id: 2,

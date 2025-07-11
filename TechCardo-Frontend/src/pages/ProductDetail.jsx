@@ -6,13 +6,15 @@ export default function ProductDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [clicked, setClicked] = useState(false);
-
+  
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [id]);
-
+  
   const pid = Number(id);
   const product = products.find(p => p.id === pid);
+  const defaultColor = product.haveColor ? product.types.color.options[0] : null;
+  const [selectedTypeOption, setSelectedTypeOption] = useState(defaultColor);
   const recommended = products.filter(p => p.id !== pid).slice(0, 5);
 
   const wrapper = children => (
@@ -47,39 +49,59 @@ export default function ProductDetail() {
       </div>
 
       <div className="container mx-auto flex flex-col md:flex-row items-start gap-10 px-6 py-10">
-
         <div className="flex flex-col items-center w-full md:w-auto">
           <img
-            src={product.image}
+            src={selectedTypeOption.image}
             alt={product.name}
-            className="max-w-md w-full rounded-xl shadow-2xl object-cover"
+            className="w-[440px] h-[440px] rounded-xl shadow-2xl object-cover"
           />
           
-          {product.haveType && product.haveSize && (
-            <div className="mt-8 w-full max-w-md">
-              <div className="grid grid-cols-5 gap-3">
-                {product.types.size.options.map(option => (
-                  <button
-                    key={option.value}
-                    className="py-2 rounded-lg border border-gray-700 bg-gray-900 hover:bg-gray-800 transition font-bold text-white"
-                  >
-                    {option.value}
-                  </button>
-                ))}
+          {product.haveType && (
+          <div className="mt-8 w-full max-w-md space-y-6">
+                    
+            {product.haveSize && (
+              <div>
+                <h3 className="mb-2 text-sm font-medium text-gray-300">{product.types.size.title}</h3>
+                <div className="grid grid-cols-5 gap-3">
+                  {product.types.size.options.map(option => (
+                    <button
+                      key={option.value}
+                      className="py-2 rounded-lg border border-gray-700 bg-gray-900 hover:bg-gray-800 transition font-bold text-white"
+                    >
+                      {option.value}
+                    </button>
+                  ))}
+                </div>
               </div>
+            )}
+
+           
+          {Object.entries(product.types).map(([typeKey, typeData]) => {
+          if (typeKey === 'size') return null;
+            
+            return (
+            <div key={typeKey}>
+              <h3 className="mb-2 text-sm font-medium text-gray-300">{typeData.title}</h3>
               <div className="grid grid-cols-5 gap-3">
-                {product.types.color.options.map(option => (
-                  <button
-                    key={option.value}
-                    className="py-2 rounded-lg border border-gray-700 bg-gray-900 hover:bg-gray-800 transition font-bold text-white"
-                  >
-                    {option.value}
-                  </button>
-                ))}
+              {typeData.options.map(option => (
+              <button
+              key={option.value}
+              onClick={() => setSelectedTypeOption(option)}
+              className={`border-[5px] rounded-lg overflow-hidden transition 
+                ${selectedTypeOption?.value === option.value ? 'border-blue-700' : 'border-gray-700 hover:border-gray-500'}`}
+              >
+                <img
+                  src={option.image}
+                  alt={option.value}
+                  className="w-full h-14 object-cover"
+                />
+              </button>
+              ))}
               </div>
             </div>
-          )}
-
+            );
+            })}
+          </div>)}
 
           <div className="mt-8 w-full max-w-md">
             <h2 className="text-xl font-semibold mb-4">Outros produtos recomendados</h2>
