@@ -13,9 +13,13 @@ export default function ProductDetail() {
   
   const pid = Number(id);
   const product = products.find(p => p.id === pid);
-  const defaultColor = product.haveColor ? product.types.color.options[0] : null;
-  const [selectedTypeOption, setSelectedTypeOption] = useState(defaultColor);
+  const defaultTypeOption = product.types?.type?.options?.[0] ?? { image: '', value: null };
+  const [selectedTypeOption, setSelectedTypeOption] = useState(defaultTypeOption);
   const recommended = products.filter(p => p.id !== pid).slice(0, 5);
+
+  useEffect(() => {
+     setSelectedTypeOption(defaultTypeOption);
+  }, [defaultTypeOption]);
 
   const wrapper = children => (
     <div className="bg-black text-white min-h-screen flex items-center justify-center p-6">
@@ -51,7 +55,7 @@ export default function ProductDetail() {
       <div className="container mx-auto flex flex-col md:flex-row items-start gap-10 px-6 py-10">
         <div className="flex flex-col items-center w-full md:w-auto">
           <img
-            src={selectedTypeOption.image}
+            src={selectedTypeOption?.image}
             alt={product.name}
             className="w-[440px] h-[440px] rounded-xl shadow-2xl object-cover"
           />
@@ -61,7 +65,7 @@ export default function ProductDetail() {
                     
             {product.haveSize && (
               <div>
-                <h3 className="mb-2 text-sm font-medium text-gray-300">{product.types.size.title}</h3>
+                <h3 className="mb-2 text-sm font-medium text-gray-300">Tamanho</h3>
                 <div className="grid grid-cols-5 gap-3">
                   {product.types.size.options.map(option => (
                     <button
@@ -75,7 +79,7 @@ export default function ProductDetail() {
               </div>
             )}
 
-           
+          
           {Object.entries(product.types).map(([typeKey, typeData]) => {
           if (typeKey === 'size') return null;
             
@@ -103,6 +107,7 @@ export default function ProductDetail() {
             })}
           </div>)}
 
+          {/* Recomendações */}  
           <div className="mt-8 w-full max-w-md">
             <h2 className="text-xl font-semibold mb-4">Outros produtos recomendados</h2>
             <div className="grid grid-cols-1 gap-4">
@@ -113,7 +118,7 @@ export default function ProductDetail() {
                   className="flex gap-4 bg-gray-900 p-3 rounded-lg cursor-pointer hover:bg-gray-800 transition"
                 >
                   <img
-                    src={item.image}
+                    src={item.types?.type?.options?.[0]?.image}
                     alt={item.name}
                     className="w-20 h-20 object-cover rounded"
                   />
@@ -132,7 +137,7 @@ export default function ProductDetail() {
         {/* Detalhes do produto */}
         <div className="flex-1 space-y-6">
           <h1 className="text-4xl font-extrabold">{product.name}</h1>
-
+          
           { product.HaveOffer ? (
           <div>  
             <p className="text-1xl text-gray-500 font-bold line-through">
@@ -147,6 +152,8 @@ export default function ProductDetail() {
             {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.price)}
           </p>  
           )}
+
+          <h1 className="text-xl font-extrabold">⭐ {product.star}</h1>
 
           <ul className="space-y-2 text-gray-300">
             <li>✅ Qualidade garantida</li>

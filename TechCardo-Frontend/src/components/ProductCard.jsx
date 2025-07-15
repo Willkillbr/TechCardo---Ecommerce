@@ -13,7 +13,7 @@ export default function ProductCard({ product }) {
         exit={{ opacity: 0, scale: 0.95 }}
         transition={{ duration: 0.2 }}
       >
-        <img src={product.image} alt={product.name} className="w-full h-56 object-cover" />
+        <img src={product.types?.type?.options[0]?.image} alt={product.name} className="w-full h-56 object-cover"/>
         <div className="p-4">
           <h3 className="text-lg font-semibold">{product.name}</h3>          
 
