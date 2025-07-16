@@ -1,6 +1,9 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect,useState } from 'react';
 import products from '../data/products';
+import Header from '../components/Header.jsx';
+import Footer from '../components/Footer.jsx';
+import FreteSimulado from '../components/Detail/FreteSimulado.jsx';
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -16,10 +19,14 @@ export default function ProductDetail() {
   const defaultTypeOption = product.types?.type?.options?.[0] ?? { image: '', value: null };
   const [selectedTypeOption, setSelectedTypeOption] = useState(defaultTypeOption);
   const recommended = products.filter(p => p.id !== pid).slice(0, 5);
+  const defaultSizeOption = product.types?.size?.options?.[0] ?? { value: null };
+  const [selectedSizeOption, setSelectedSizeOption] = useState(defaultSizeOption);
 
   useEffect(() => {
-     setSelectedTypeOption(defaultTypeOption);
-  }, [defaultTypeOption]);
+  setSelectedTypeOption(defaultTypeOption);
+  setSelectedSizeOption(defaultSizeOption);
+}, [defaultTypeOption, defaultSizeOption]);
+
 
   const wrapper = children => (
     <div className="bg-black text-white min-h-screen flex items-center justify-center p-6">
@@ -43,7 +50,8 @@ export default function ProductDetail() {
 
   return (
     <div className="bg-black text-white min-h-screen">
-      <div className="p-4">
+      <Header />
+      <div className="p-4 py-20 pb-8">
         <button
           onClick={() => navigate(-1)}
           className="px-5 py-2 bg-gray-800 rounded hover:bg-gray-700 transition text-sm"
@@ -52,7 +60,7 @@ export default function ProductDetail() {
         </button>
       </div>
 
-      <div className="container mx-auto flex flex-col md:flex-row items-start gap-10 px-6 py-10">
+      <div className="container mx-auto flex flex-col md:flex-row items-start gap-10 px-6">
         <div className="flex flex-col items-center w-full md:w-auto">
           <img
             src={selectedTypeOption?.image}
@@ -68,17 +76,21 @@ export default function ProductDetail() {
                 <h3 className="mb-2 text-sm font-medium text-gray-300">Tamanho</h3>
                 <div className="grid grid-cols-5 gap-3">
                   {product.types.size.options.map(option => (
-                    <button
-                      key={option.value}
-                      className="py-2 rounded-lg border border-gray-700 bg-gray-900 hover:bg-gray-800 transition font-bold text-white"
-                    >
-                      {option.value}
-                    </button>
-                  ))}
+                  <button
+                    key={option.value}
+                    onClick={() => setSelectedSizeOption(option)}
+                    className={`py-2 rounded-lg border-[3px] transition font-bold text-white
+                      ${selectedSizeOption?.value === option.value
+                        ? 'border-blue-700 bg-gray-800'
+                        : 'border-gray-700 bg-gray-900 hover:bg-gray-800'}`}
+                  >
+                    {option.value}
+                  </button>
+                ))}
+   
                 </div>
               </div>
             )}
-
           
           {Object.entries(product.types).map(([typeKey, typeData]) => {
           if (typeKey === 'size') return null;
@@ -87,24 +99,20 @@ export default function ProductDetail() {
             <div key={typeKey}>
               <h3 className="mb-2 text-sm font-medium text-gray-300">{typeData.title}</h3>
               <div className="grid grid-cols-5 gap-3">
-              {typeData.options.map(option => (
-              <button
-              key={option.value}
-              onClick={() => setSelectedTypeOption(option)}
-              className={`border-[5px] rounded-lg overflow-hidden transition 
-                ${selectedTypeOption?.value === option.value ? 'border-blue-700' : 'border-gray-700 hover:border-gray-500'}`}
-              >
-                <img
-                  src={option.image}
-                  alt={option.value}
-                  className="w-full h-14 object-cover"
-                />
-              </button>
-              ))}
+                {typeData.options.map(option => (
+                <button
+                  key={option.value}
+                  onClick={() => setSelectedTypeOption(option)}
+                  className={`border-[4px] rounded-lg overflow-hidden transition 
+                  ${selectedTypeOption?.value === option.value ? 'border-blue-700' : 'border-gray-700 hover:border-gray-500'}`}
+                  >
+                  <img src={option.image} alt={option.value} className="w-full h-14 object-cover"/>
+                </button>
+                ))}
               </div>
             </div>
             );
-            })}
+            })} 
           </div>)}
 
           {/* Recomendações */}  
@@ -160,16 +168,7 @@ export default function ProductDetail() {
             <li>🚚 Envio rápido para todo o Brasil</li>
             <li>🔒 Compra 100% segura</li>
             <li>📦 Devolução grátis em até 7 dias</li>
-          </ul>
-
-          <div className="mt-6 p-4 bg-gray-900 rounded-lg border border-gray-700">
-            <h2 className="text-xl font-semibold mb-3">Fretes disponíveis</h2>
-            <ul className="list-disc list-inside space-y-1 text-gray-300">
-              <li>PAC - R$ 20,00 (5 a 8 dias úteis)</li>
-              <li>SEDEX - R$ 40,00 (2 a 4 dias úteis)</li>
-              <li>Retirada na loja - Grátis</li>
-            </ul>
-          </div>
+          </ul>                    
 
           <p className="text-gray-400">
             {product.description}
@@ -202,6 +201,11 @@ export default function ProductDetail() {
             </div>
 
           </div>
+
+          <div className="mt-8 p-4 bg-gray-900 rounded-lg border border-gray-700">
+            <h2 className="text-xl font-semibold mb-3">Origem: {product.LocalCity}</h2>
+            <FreteSimulado originCep={product.LocalCep} />       
+          </div>  
 
           <div className="mt-10 border-t border-gray-700 pt-6">
             <h3 className="text-2xl font-bold mb-4">Comentários</h3>
@@ -236,6 +240,7 @@ export default function ProductDetail() {
           </div>
         </div>
       </div>
+      <Footer />        
     </div>
   );
 }

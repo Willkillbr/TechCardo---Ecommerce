@@ -61,7 +61,10 @@ export default function Hero() {
           className="absolute inset-0 w-full h-full top-14 animate-[bounce_1.5s_infinite]"
           preserveAspectRatio="none"
         >
-          <polygon fill="#ffffff" points="41,0 59,0 50,39" />
+          <path
+            fill="#ffffff"
+            d="M42,0 Q50,3 58,0 L50,39 Z"
+          />
         </svg>
       </div>
     </section>

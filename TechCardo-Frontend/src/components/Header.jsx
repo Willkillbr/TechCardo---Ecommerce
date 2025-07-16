@@ -43,8 +43,8 @@ export default function Header() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 w-full z-50 bg-black bg-opacity-30 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+      <header className="top-0 left-0 w-full z-50 bg-black bg-opacity-30 backdrop-blur-sm absolute pointer-events-none">
+        <div className="container mx-auto px-4 py-4 flex justify-between items-center pointer-events-auto">
           <h1 className="text-2xl font-bold text-white">TechCardo</h1>
           <nav className="hidden md:flex space-x-6 text-gray-200">
             {menuItems.map(({ label, href, onClick }) =>
@@ -69,7 +69,7 @@ export default function Header() {
         </div>
 
         {open && (
-          <div className="bg-black bg-opacity-50 md:hidden">
+          <div className="bg-black bg-opacity-50 md:hidden pointer-events-auto">
             {menuItems.map(({ label, href, onClick }) =>
               onClick ? (
                 <button

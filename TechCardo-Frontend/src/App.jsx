@@ -1,11 +1,11 @@
 import React from 'react';
 import Header from './components/Header.jsx';
-import Hero from './components/Hero.jsx';
-import Features from './components/Features.jsx';
-import ProductCard from './components/ProductCard.jsx';
-import Newsletter from './components/Newsletter.jsx';
 import Footer from './components/Footer.jsx';
-import Divisor from './components/Divisor.jsx';
+import Hero from './components/main/Hero.jsx';
+import Features from './components/main/Features.jsx';
+import ProductCard from './components/main/ProductCard.jsx';
+import Newsletter from './components/main/NewsLetter.jsx';
+import Divisor from './components/main/Divisor.jsx';
 import { AnimatePresence } from 'framer-motion';
 import products from './data/products';
 
@@ -61,7 +61,7 @@ export default function App() {
         {filteredProducts.length > itemsPerPage && (
           <div className="flex justify-center mt-8 space-x-2">
             {[...Array(pageCount)].map((_, index) => (
-                <button
+                <button 
                     key={index + 1}
                     onClick={() => setPage(index + 1)}
                     className={`w-10 h-10 rounded-full flex items-center justify-center border text-sm font-medium transition ${
