@@ -8,7 +8,7 @@ const products = [
     HaveOffer: true,
     offer: 28,    
     LocalCep: '01000000',    
-    LocalCity: 'São Paulo - SP',
+    LocalCity: 'São Paulo - SP', 
     haveType: true,
     haveColor: true,
     haveSize: true,
@@ -19,7 +19,7 @@ const products = [
           {
             value: 'branco',
             image: 'https://res.cloudinary.com/dzuvl4k2f/image/upload/v1752253046/nike_revolutuion_branco_az31ju.avif'
-          },
+          },  
           {
             value: 'azul',
             image: 'https://res.cloudinary.com/dzuvl4k2f/image/upload/v1752253139/nike_revolutuion_azul_hps5b9.avif'

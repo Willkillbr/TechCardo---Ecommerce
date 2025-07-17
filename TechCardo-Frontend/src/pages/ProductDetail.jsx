@@ -9,11 +9,6 @@ export default function ProductDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [clicked, setClicked] = useState(false);
-  
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [id]);
-  
   const pid = Number(id);
   const product = products.find(p => p.id === pid);
   const defaultTypeOption = product.types?.type?.options?.[0] ?? { image: '', value: null };
@@ -23,10 +18,13 @@ export default function ProductDetail() {
   const [selectedSizeOption, setSelectedSizeOption] = useState(defaultSizeOption);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
+  
+  useEffect(() => {
   setSelectedTypeOption(defaultTypeOption);
   setSelectedSizeOption(defaultSizeOption);
 }, [defaultTypeOption, defaultSizeOption]);
-
 
   const wrapper = children => (
     <div className="bg-black text-white min-h-screen flex items-center justify-center p-6">
@@ -48,6 +46,8 @@ export default function ProductDetail() {
     );
   }
 
+
+  { /*-------------------------------- RETORNO --------------------------------*/ }
   return (
     <div className="bg-black text-white min-h-screen">
       <Header />
@@ -86,9 +86,9 @@ export default function ProductDetail() {
                   >
                     {option.value}
                   </button>
-                ))}
+                  ))}
    
-                </div>
+                </div>  
               </div>
             )}
           
@@ -175,30 +175,49 @@ export default function ProductDetail() {
           </p>
 
           <div className="flex gap-4">
+
             <button className="bg-blue-700 px-6 py-3 rounded font-semibold hover:bg-blue-800 transition">
               Comprar Agora
             </button>
+
             <div className="relative inline-block group overflow-visible">
-              <button
-                onClick={() => {
-                  setClicked(true);
-                  setTimeout(() => setClicked(false), 1000); 
-                }}
-                className="relative z-10 border border-white bg-black px-6 py-3 rounded font-semibold transition"
-              >
-                Adicionar ao Carrinho
-              </button>
-              
-              <img
-                src="/assets/carrinho.png"
-                alt="Carrinho"
-                className={`absolute top-1/2 left-[80%] w-10 h-10 z-0
-                  transform -translate-x-1/2 -translate-y-1/2
-                  transition-transform
-                  ${clicked ? 'duration-1000 translate-x-[2300%]' : 'duration-500 group-hover:translate-x-[150%]'}
-                `}
-              />
-            </div>
+  <button
+    onClick={() => {
+      const existingCart = JSON.parse(localStorage.getItem('cart')) || [];
+
+      const newItem = {
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        HaveOffer: product.HaveOffer,
+        offer: product.offer,
+        selectedType: selectedTypeOption,
+        selectedSize: selectedSizeOption,
+        image: selectedTypeOption?.image,
+        LocalCity: product.LocalCity
+      };
+
+      localStorage.setItem('cart', JSON.stringify([...existingCart, newItem]));
+
+      setClicked(true);
+      setTimeout(() => setClicked(false), 1000);
+    }}
+    className="relative z-10 border border-white bg-black px-6 py-3 rounded font-semibold transition"
+  >
+    Adicionar ao Carrinho
+  </button>
+
+  <img
+    src="/assets/carrinho.png"
+    alt="Carrinho"
+    className={`absolute top-1/2 left-[80%] w-10 h-10 z-0
+      transform -translate-x-1/2 -translate-y-1/2
+      transition-transform
+      ${clicked ? 'duration-1000 translate-x-[2300%]' : 'duration-500 group-hover:translate-x-[150%]'}
+    `}
+  />
+</div>
+
 
           </div>
 
