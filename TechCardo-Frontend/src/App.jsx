@@ -15,7 +15,7 @@ export default function App() {
   const itemsPerPage = 20;
 
   const filteredProducts = products.filter(product =>
-    product.name.toLowerCase().includes(search.toLowerCase())
+    product.nome.toLowerCase().includes(search.toLowerCase())
   );
 
   const pageCount = Math.ceil(filteredProducts.length / itemsPerPage);
@@ -31,7 +31,7 @@ export default function App() {
       <Features />
       <Divisor />
 
-      <section className="container mx-auto px-4 py-6" name="products" id='products'>
+      <section className="container mx-auto px-4 py-6" name="products" id="products">
         <div className="mb-6 flex justify-center">
           <input
             type="text"
@@ -61,23 +61,24 @@ export default function App() {
         {filteredProducts.length > itemsPerPage && (
           <div className="flex justify-center mt-8 space-x-2">
             {[...Array(pageCount)].map((_, index) => (
-                <button 
-                    key={index + 1}
-                    onClick={() => setPage(index + 1)}
-                    className={`w-10 h-10 rounded-full flex items-center justify-center border text-sm font-medium transition ${
-                      page === index + 1 ? 'bg-white text-black' : 'bg-gray-700 text-white hover:bg-gray-600'
-                    }`}
-                    >
-                    {index + 1}                                
-                </button>
-            ))}            
+              <button
+                key={index + 1}
+                onClick={() => setPage(index + 1)}
+                className={`w-10 h-10 rounded-full flex items-center justify-center border text-sm font-medium transition ${
+                  page === index + 1
+                    ? 'bg-white text-black'
+                    : 'bg-gray-700 text-white hover:bg-gray-600'
+                }`}
+              >
+                {index + 1}
+              </button>
+            ))}
           </div>
         )}
       </section>
 
       <Newsletter />
       <Footer />
-      
     </div>
   );
 }

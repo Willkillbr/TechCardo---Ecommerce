@@ -6,15 +6,13 @@ import AdminPanel from "./pages/AdminPanel.jsx";
 import './index.css';
 import ProductDetail from './pages/ProductDetail.jsx';
 
-
-
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/admin" element={<AdminPanel />} />
-        <Route path="/product/:id" element={<ProductDetail />} />
+        <Route path="/produto/:slug" element={<ProductDetail />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
