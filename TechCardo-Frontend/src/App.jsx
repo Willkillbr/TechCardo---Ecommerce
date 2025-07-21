@@ -1,28 +1,26 @@
-import React from 'react';
-import Header from './components/Header.jsx';
-import Footer from './components/Footer.jsx';
-import Hero from './components/main/Hero.jsx';
-import Features from './components/main/Features.jsx';
-import ProductCard from './components/main/ProductCard.jsx';
-import Newsletter from './components/main/NewsLetter.jsx';
-import Divisor from './components/main/Divisor.jsx';
-import { AnimatePresence } from 'framer-motion';
-import products from './data/products';
+import { useState, useEffect } from 'react'
+import ProductCard from './components/main/ProductCard.jsx'
+import Header from './components/Header.jsx'
+import Footer from './components/Footer.jsx'
+import Hero from './components/main/Hero.jsx'
+import Features from './components/main/Features.jsx'
+import Newsletter from './components/main/NewsLetter.jsx'
+import Divisor from './components/main/Divisor.jsx'
+import destaques from './data/destaques.jsx'
+
+const itemsPerPage = 5
 
 export default function App() {
-  const [search, setSearch] = React.useState('');
-  const [page, setPage] = React.useState(1);
-  const itemsPerPage = 20;
+  const [page, setPage] = useState(0)
+  const totalPages = Math.ceil(destaques.length / itemsPerPage)
+  const paginatedProducts = destaques.slice(page * itemsPerPage, (page + 1) * itemsPerPage)
 
-  const filteredProducts = products.filter(product =>
-    product.nome.toLowerCase().includes(search.toLowerCase())
-  );
-
-  const pageCount = Math.ceil(filteredProducts.length / itemsPerPage);
-  const paginatedProducts = filteredProducts.slice(
-    (page - 1) * itemsPerPage,
-    page * itemsPerPage
-  );
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPage(prev => (prev + 1) % totalPages)
+    }, 10000)
+    return () => clearInterval(interval)
+  }, [totalPages])
 
   return (
     <div className="bg-black text-white min-h-screen flex flex-col">
@@ -31,54 +29,35 @@ export default function App() {
       <Features />
       <Divisor />
 
-      <section className="container mx-auto px-4 py-6" name="products" id="products">
-        <div className="mb-6 flex justify-center">
-          <input
-            type="text"
-            placeholder="Buscar produtos..."
-            value={search}
-            onChange={e => {
-              setSearch(e.target.value);
-              setPage(1);
-            }}
-            className="w-full max-w-md px-4 py-2 rounded bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {paginatedProducts.length > 0 ? (
-            <AnimatePresence mode="wait">
-              {paginatedProducts.map(product => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </AnimatePresence>
-          ) : (
-            <p className="text-center col-span-full text-gray-400 text-lg">
-              Nenhum produto encontrado.
-            </p>
-          )}
+      <section className="container mx-auto py-6" name="destaques" id="destaques">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+          {paginatedProducts.map(product => (
+            <ProductCard key={product.id} product={product} />
+          ))}
         </div>
 
-        {filteredProducts.length > itemsPerPage && (
-          <div className="flex justify-center mt-8 space-x-2">
-            {[...Array(pageCount)].map((_, index) => (
-              <button
-                key={index + 1}
-                onClick={() => setPage(index + 1)}
-                className={`w-10 h-10 rounded-full flex items-center justify-center border text-sm font-medium transition ${
-                  page === index + 1
-                    ? 'bg-white text-black'
-                    : 'bg-gray-700 text-white hover:bg-gray-600'
-                }`}
-              >
-                {index + 1}
-              </button>
-            ))}
-          </div>
-        )}
+        <div className="flex justify-center mt-6 space-x-3">
+          {[...Array(totalPages).keys()].map(dotIndex => (
+            <button
+              key={dotIndex}
+              onClick={() => setPage(dotIndex)}
+              className={`w-3 h-3 rounded-full transition ${
+                dotIndex === page ? 'bg-blue-700' : 'bg-gray-800 hover:bg-gray-400'
+              }`}
+              aria-label={`Página ${dotIndex + 1}`}
+            />
+          ))}
+        </div>
+        <div className='flex justify-center mt-6'>
+          <button className="bg-gray-700 p-3 rounded-md">Ver mais Produtos</button>           
+        </div>
+        <div className="flex justify-center mt-6">
+          <div className="mt-4 w-8 h-1 bg-gray-700 mx-auto rounded m-6 p-[3px]"></div> 
+        </div>          
       </section>
 
       <Newsletter />
       <Footer />
     </div>
-  );
+  )
 }

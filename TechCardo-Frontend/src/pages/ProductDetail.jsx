@@ -20,26 +20,24 @@ export default function ProductDetail() {
   const [tamanhoStartIndex, setTamanhoStartIndex] = useState(0);
   const maxVisible = 5;
   const tamanhosVisiveis = tamanhos.slice(tamanhoStartIndex, tamanhoStartIndex + maxVisible);
-  const canGoLeft = tamanhoStartIndex > 0;
-  const canGoRight = tamanhoStartIndex + maxVisible < tamanhos.length;
 
   const coresMap = {
-  vermelho: '#FF0000',
-  azul: '#03abff',
-  verde: '#008000',
-  amarelo: '#FFFF00',
-  preto: '#000000', 
-  branco: '#FFFFFF',
-  laranja: '#FFA500',
-  rosa: '#FFC0CB',
-  roxo: '#800080',
-  cinza: '#808080',
-  marrom: '#A52A2A',
-  bege: '#F5F5DC',
-  turquesa: '#40E0D0',
-  vinho: '#800000',
-  dourado: '#FFD700',
-  prata: '#C0C0C0',
+        vermelho: '#FF0000',
+        azul:     '#03abff',
+        verde:    '#008000',
+        amarelo:  '#FFFF00',
+        preto:    '#000000', 
+        branco:   '#FFFFFF',
+        laranja:  '#FFA500',
+        rosa:     '#FFC0CB',
+        roxo:     '#800080',
+        cinza:    '#808080',
+        marrom:   '#A52A2A',
+        bege:     '#F5F5DC',
+        turquesa: '#40E0D0',
+        vinho:    '#800000',
+        dourado:  '#FFD700',
+        prata:    '#C0C0C0',
 };
 
   useEffect(() => {
@@ -140,8 +138,8 @@ export default function ProductDetail() {
                      disabled={tamanhoStartIndex + maxVisible >= tamanhos.length}
                      onClick={() => setTamanhoStartIndex(tamanhoStartIndex + 1)}
                      className={`px-2 py-1 rounded border border-gray-700 hover:bg-gray-700 disabled:opacity-50 text-lg`}
-                   >
-                     &gt;
+                    >
+                      &gt;
                    </button>
                  </div>
                </div>
@@ -204,9 +202,9 @@ export default function ProductDetail() {
                 product.preco_original
               )}
             </p>
-          )}
-
+          )}    
           <h2 className="text-xl font-extrabold">⭐ {product.nota_media}</h2>
+
 
           <ul className="space-y-2 text-gray-300">
             <li>✅ Qualidade garantida</li>
@@ -216,7 +214,6 @@ export default function ProductDetail() {
           </ul>
 
           <p className="text-gray-400">{product.descricao}</p>
-
           <div className="flex gap-4">
             <button className="bg-blue-700 px-6 py-3 rounded font-semibold hover:bg-blue-800 transition">
               Comprar Agora

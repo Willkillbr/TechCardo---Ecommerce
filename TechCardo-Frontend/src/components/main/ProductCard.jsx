@@ -6,6 +6,12 @@ export default function ProductCard({ product }) {
   const precoOriginal = product.preco_original;
   const precoPromocional = product.preco_promocional;
 
+  const truncatedName =
+    product.nome.length > 29
+      ? product.nome.slice(0, 29) + "..."
+      : product.nome;
+  const newLocal = <h3 className="font-semibold">{truncatedName}</h3>;
+
   return (
     <Link to={`/produto/${product.slug}`}>
       <motion.div
@@ -15,9 +21,10 @@ export default function ProductCard({ product }) {
         exit={{ opacity: 0, scale: 0.95 }}
         transition={{ duration: 0.2 }}
       >
-        <img src={product.imagens?.[0]} alt={product.nome} className="w-full h-56 object-cover"/>
+        <img src={product.imagem || product.imagens?.[0]} alt={product.nome} className="w-full h-56 object-cover" />
+
         <div className="p-4">
-          <h3 className="text-lg font-semibold">{product.nome}</h3>
+          {newLocal}
 
           {hasOffer ? (
             <div>
@@ -71,7 +78,8 @@ export default function ProductCard({ product }) {
           )}
 
         </div>
-      </motion.div>
+      </motion.div>      
     </Link>
+
   );
 }
