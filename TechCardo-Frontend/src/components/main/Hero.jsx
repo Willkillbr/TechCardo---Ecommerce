@@ -39,7 +39,7 @@ export default function Hero() {
           Bem-vindo à TechCardo
         </h2>
         <p className="text-2xl md:text-3xl mb-8 text-gray-200">
-          Encontre os melhores produtos com design moderno e qualidade superior
+          lorem ipsum dolor sit amet, consectetur adipiscing elit.
         </p>
         <a
           href="https://youtu.be/dQw4w9WgXcQ?feature=shared"

@@ -7,6 +7,20 @@ const news = [
         "slug": "comparativo-fones-2025"
     },
     {
+        "id": 8,
+        "titulo": "Segurança digital: como proteger seus dados em 2025",
+        "descricao": "Veja as melhores práticas e ferramentas para manter suas informações seguras na era digital.",
+        "imagem": "https://res.cloudinary.com/dzuvl4k2f/image/upload/v1753204311/unnamed_bbqbrp.jpg",
+        "slug": "seguranca-digital-2025"
+    },
+    {
+        "id": 9,
+        "titulo": "Impressoras 3D: inovação acessível para todos",
+        "descricao": "Saiba como as impressoras 3D estão revolucionando o mercado e tornando a tecnologia mais acessível.",
+        "imagem": "https://res.cloudinary.com/dzuvl4k2f/image/upload/v1753204412/unnamed_ahvxlz.jpg",
+        "slug": "impressoras-3d-inovacao"
+    },
+    {
         "id": 1,
         "titulo": "Lançamento exclusivo: nova linha de smartwatches",
         "descricao": "Conheça os recursos avançados da nova geração de relógios inteligentes e descubra como podem melhorar sua rotina.",
@@ -40,7 +54,14 @@ const news = [
         "descricao": "Veja os lançamentos de acessórios feitos com materiais recicláveis e sustentáveis.",
         "imagem": "https://res.cloudinary.com/dzuvl4k2f/image/upload/v1753126484/05ed89c5-1a06-4112-83db-a81742557585_fl5zl9.png",
         "slug": "tecnologia-sustentavel-acessorios"
-    }
+    },
+    {
+        "id": 7,
+        "titulo": "Realidade aumentada: tendências para o varejo",
+        "descricao": "Descubra como a realidade aumentada está transformando a experiência de compra online e física.",
+        "imagem": "https://res.cloudinary.com/dzuvl4k2f/image/upload/v1753204137/unnamed_oz6m4h.jpg",
+        "slug": "realidade-aumentada-varejo"
+    },
 ]
 
 export default news;

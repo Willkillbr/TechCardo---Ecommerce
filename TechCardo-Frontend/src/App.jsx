@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react'
+import destaques from './data/destaques.jsx'
+
+{/* Componentes */}
 import ProductCard from './components/main/ProductCard.jsx'
 import Header from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
@@ -6,7 +9,7 @@ import Hero from './components/main/Hero.jsx'
 import Features from './components/main/Features.jsx'
 import Newsletter from './components/main/NewsLetter.jsx'
 import Divisor from './components/main/Divisor.jsx'
-import destaques from './data/destaques.jsx'
+import QuemSomos from './components/main/QuemSomos.jsx'
 
 const itemsPerPage = 5
 
@@ -56,6 +59,7 @@ export default function App() {
         </div>          
       </section>
 
+      <QuemSomos />   
       <Newsletter />
       <Footer />
     </div>
