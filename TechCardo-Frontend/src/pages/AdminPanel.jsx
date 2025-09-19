@@ -2,12 +2,11 @@ import { useState } from 'react';
 import Header from '../components/Header.jsx';
 import products from '../data/products';
 
-
 export default function AdminDashboard() {
   const tabs = ['Produtos', 'Fretes', 'Categorias', 'Pedidos'];
   const [activeTab, setActiveTab] = useState('Produtos');
 
-const [data, setData] = useState({
+  const [data, setData] = useState({
     Produtos: products,
     Fretes: [
       { id: 1, region: 'Região Sul', cost: 'R$ 15,00' },
@@ -43,7 +42,7 @@ const [data, setData] = useState({
   const [searchTerm, setSearchTerm] = useState('');
 
   const fieldsMap = {
-    Produtos: ['name', 'price', 'category'],
+    Produtos: ['nome', 'sku', 'preco_promocional', 'preco_original', 'categoria', 'estoque'],
     Fretes: ['region', 'cost'],
     Categorias: ['name'],
     Pedidos: ['customer', 'total', 'status'],
@@ -61,7 +60,7 @@ const [data, setData] = useState({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const list = data[activeTab];
+    const list = data[activeTab] || [];
     if (editId) {
       const updated = list.map(item =>
         item.id === editId ? { ...item, ...formState, id: editId } : item
@@ -75,7 +74,7 @@ const [data, setData] = useState({
   };
 
   const handleDelete = (id) => {
-    const filtered = data[activeTab].filter(item => item.id !== id);
+    const filtered = (data[activeTab] || []).filter(item => item.id !== id);
     setData(prev => ({ ...prev, [activeTab]: filtered }));
     if (editId === id) resetForm();
   };
@@ -89,18 +88,55 @@ const [data, setData] = useState({
     setSearchTerm(e.target.value);
   };
 
-  const renderTable = () => {
-    let list = data[activeTab];
-    if (fieldsMap[activeTab].includes('name') && searchTerm) {
-      list = list.filter(item =>
-        item.name.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+  const currency = (v) => {
+    try {
+      return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(v));
+    } catch {
+      return String(v);
     }
-    const headers = list[0] ? Object.keys(list[0]).filter(h => h !== 'id') : [];
+  };
+
+  const formatCell = (v, key) => {
+    if (v === null || v === undefined) {
+      if (key === 'dimensoes') return '-';
+      return '';
+    }
+    if (Array.isArray(v)) {
+      if (v.every(x => typeof x !== 'object')) return v.join(', ');
+      return JSON.stringify(v);
+    }
+    if (typeof v === 'object') {
+      if ('largura' in v || 'altura' in v || 'profundidade' in v) {
+        const l = v.largura ?? '-';
+        const a = v.altura ?? '-';
+        const p = v.profundidade ?? '-';
+        return `${l}x${a}x${p}`;
+      }
+      if ('cores' in v || 'tamanhos' in v) {
+        const parts = [];
+        if (v.cores) parts.push(Array.isArray(v.cores) ? v.cores.join(', ') : String(v.cores));
+        if (v.tamanhos) parts.push(Array.isArray(v.tamanhos) ? v.tamanhos.join(', ') : String(v.tamanhos));
+        return parts.filter(Boolean).join(' | ') || JSON.stringify(v);
+      }
+      if ('nome_vendedor' in v) return String(v.nome_vendedor || '-');
+      return JSON.stringify(v);
+    }
+    if (key && (key.includes('preco') || key === 'total')) return currency(v);
+    if (key === 'peso') return `${Number(v).toFixed(3)} kg`;
+    return String(v);
+  };
+
+  const renderTable = () => {
+    let list = data[activeTab] || [];
+    const visibleFields = (fieldsMap[activeTab] && fieldsMap[activeTab].length) ? fieldsMap[activeTab] : (list[0] ? Object.keys(list[0]).filter(h => h !== 'id') : []);
+    if (visibleFields.includes('nome') && searchTerm) {
+      list = list.filter(item => (item.nome || '').toLowerCase().includes(searchTerm.toLowerCase()));
+    }
+    console.log('table sample', activeTab, list.slice(0, 3));
 
     return (
       <div className="rounded-lg shadow-lg bg-gray-900 p-4">
-      <Header />  
+        <Header />
         <input
           type="text"
           value={searchTerm}
@@ -108,31 +144,25 @@ const [data, setData] = useState({
           placeholder="Pesquisar por nome"
           className="mb-4 w-full bg-gray-800 text-gray-200 p-2 rounded focus:outline-none focus:ring focus:border-blue-500"
         />
-          <div className="overflow-y-auto max-h-80 scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800">
+        <div className="overflow-y-auto max-h-80 scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800">
           <table className="min-w-full text-left text-sm text-gray-300">
             <thead className="border-b border-gray-700 bg-gray-800 sticky top-0">
               <tr>
-                {headers.map(h => (
+                {visibleFields.map(h => (
                   <th key={h} className="px-4 py-2 uppercase">{h}</th>
                 ))}
                 <th className="px-4 py-2">Ações</th>
               </tr>
             </thead>
             <tbody>
-              {list.map(row => (
-                <tr key={row.id} className="border-b border-gray-800 hover:bg-gray-800">
-                  {headers.map(h => (
-                    <td key={h} className="px-4 py-3">{row[h]}</td>
+              {list.map((row, idx) => (
+                <tr key={row.id ?? idx} className="border-b border-gray-800 hover:bg-gray-800">
+                  {visibleFields.map(h => (
+                    <td key={h} className="px-4 py-3">{formatCell(row[h], h)}</td>
                   ))}
                   <td className="px-4 py-3 space-x-2">
-                    <button
-                      onClick={() => handleEdit(row)}
-                      className="px-2 py-1 rounded bg-blue-600 hover:bg-blue-700"
-                    >Editar</button>
-                    <button
-                      onClick={() => handleDelete(row.id)}
-                      className="px-2 py-1 rounded bg-red-600 hover:bg-red-700"
-                    >Excluir</button>
+                    <button onClick={() => handleEdit(row)} className="px-2 py-1 rounded bg-blue-600 hover:bg-blue-700">Editar</button>
+                    <button onClick={() => handleDelete(row.id)} className="px-2 py-1 rounded bg-red-600 hover:bg-red-700">Excluir</button>
                   </td>
                 </tr>
               ))}
